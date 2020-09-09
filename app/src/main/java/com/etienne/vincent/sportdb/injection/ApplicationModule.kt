@@ -2,12 +2,25 @@ package com.etienne.vincent.sportdb.injection
 
 import android.content.Context
 import android.content.SharedPreferences
+import com.etienne.vincent.sportdb.data.local.LocalDataSource
+import com.etienne.vincent.sportdb.data.local.LocalDataSourceImpl
 import com.etienne.vincent.sportdb.data.remote.SportsDbApi
+import com.etienne.vincent.sportdb.data.remote.datasource.RemoteDataSource
+import com.etienne.vincent.sportdb.data.remote.datasource.RemoteDataSourceImpl
+import com.etienne.vincent.sportdb.data.remote.repository.SportDbRepositoryImpl
+import com.etienne.vincent.sportdb.domain.repository.SportDbRepository
+import com.etienne.vincent.sportdb.domain.usecase.GetAllTeamUseCase
+import com.etienne.vincent.sportdb.presentation.teams.TeamsPresenter
+import com.etienne.vincent.sportdb.presentation.teams.TeamsPresenterImpl
+import com.etienne.vincent.sportdb.presentation.teams.TeamsViewContract
 import com.google.gson.Gson
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import org.koin.android.ext.koin.androidContext
+import org.koin.core.parameter.parametersOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -16,11 +29,13 @@ import java.util.concurrent.TimeUnit
 
 
 val presentationModule = module {
-    //all view model declared here
+    //all presenters declared here
+    factory<TeamsPresenter> { (viewContract: TeamsViewContract) -> TeamsPresenterImpl(viewContract, get(), get()) }
 }
 
 val domainModule = module {
     //all domain use cases declared here, with factory scope
+    factory { GetAllTeamUseCase(get()) }
 }
 
 val dataModule = module {
@@ -32,7 +47,17 @@ val dataModule = module {
 
     single { createOkHttpClient(androidContext(), get()) }
 
-    single<SportsDbApi> { createWebService(get(), "https://pokeapi.co/") }
+    single<CoroutineDispatcher> { Dispatchers.Main }
+
+    single<SportsDbApi> { createWebService(get(), "https://www.thesportsdb.com/") }
+
+    single<LocalDataSource> { LocalDataSourceImpl(get()) }
+
+    single<RemoteDataSource> { RemoteDataSourceImpl(get()) }
+
+    single<SportDbRepository> { SportDbRepositoryImpl(get(), get()) }
+
+
 }
 
 
