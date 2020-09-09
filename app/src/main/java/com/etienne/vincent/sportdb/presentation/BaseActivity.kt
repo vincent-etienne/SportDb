@@ -11,6 +11,7 @@ abstract class BaseActivity : AppCompatActivity() {
     override fun onStart() {
         super.onStart()
         initUI()
+        presenter.onStart()
     }
 
     override fun onDestroy() {

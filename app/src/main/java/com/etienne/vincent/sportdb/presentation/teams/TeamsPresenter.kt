@@ -6,4 +6,5 @@ import com.etienne.vincent.sportdb.presentation.BasePresenter
 
 interface TeamsPresenter : BasePresenter{
     fun onClickTeam(team: Team)
+    fun onSelectLeague(name: String)
 }
