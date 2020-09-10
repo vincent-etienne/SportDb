@@ -27,7 +27,7 @@ class PlayersAdapter() : RecyclerView.Adapter<PlayersAdapter.ViewHolder>() {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflater = LayoutInflater.from(parent.context)
         val itemView = inflater.inflate(R.layout.player_view_holder, parent, false)
-        return ViewHolder(parent.context, itemView)
+        return ViewHolder(itemView)
     }
 
     override fun getItemCount() = _data.size
@@ -39,7 +39,6 @@ class PlayersAdapter() : RecyclerView.Adapter<PlayersAdapter.ViewHolder>() {
     }
 
     class ViewHolder(
-        val context: Context,
         itemView: View
     ) : RecyclerView.ViewHolder(itemView) {
 
@@ -51,9 +50,8 @@ class PlayersAdapter() : RecyclerView.Adapter<PlayersAdapter.ViewHolder>() {
 
                 player_name.text = model.name
                 player_position.text = model.position
-                player_born_date.text = model.dateBorn
-                player_prize.text = model.signingAmount
-
+                player_born_date.text = context.getString(R.string.player_born_date, model.dateBorn)
+                player_prize.text = context.getString(R.string.player_signing_prize, model.signingAmount)
             }
         }
     }
