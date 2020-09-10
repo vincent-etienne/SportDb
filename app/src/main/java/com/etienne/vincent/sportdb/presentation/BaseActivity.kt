@@ -13,9 +13,4 @@ abstract class BaseActivity : AppCompatActivity() {
         initUI()
         presenter.onStart()
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        presenter.onCleared()
-    }
 }

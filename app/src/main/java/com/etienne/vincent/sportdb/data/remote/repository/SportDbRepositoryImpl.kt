@@ -2,6 +2,7 @@ package com.etienne.vincent.sportdb.data.remote.repository
 
 import com.etienne.vincent.sportdb.data.local.LocalDataSource
 import com.etienne.vincent.sportdb.data.remote.datasource.RemoteDataSource
+import com.etienne.vincent.sportdb.domain.Listener
 import com.etienne.vincent.sportdb.domain.entity.GetAllLeagues
 import com.etienne.vincent.sportdb.domain.entity.GetAllTeam
 import com.etienne.vincent.sportdb.domain.entity.GetPlayers
@@ -12,15 +13,15 @@ class SportDbRepositoryImpl(
     private val remoteDataSource: RemoteDataSource,
     private val localDataSource: LocalDataSource
 ) : SportDbRepository {
-    override suspend fun getAllTeam(leagueName: String): GetAllTeam {
-        return remoteDataSource.getAllTeam(leagueName)
+    override fun getAllTeam(leagueName: String, listener: Listener<GetAllTeam>) {
+        remoteDataSource.getAllTeam(leagueName, listener)
     }
 
-    override suspend fun getAllLeagues(): GetAllLeagues {
-        return remoteDataSource.getAllLeagues()
+    override fun getAllLeagues(listener: Listener<GetAllLeagues>) {
+        remoteDataSource.getAllLeagues(listener)
     }
 
-    override suspend fun getPlayers(teamName: String): GetPlayers {
-        return remoteDataSource.getPlayers(teamName)
+    override fun getPlayers(teamName: String, listener: Listener<GetPlayers>) {
+        remoteDataSource.getPlayers(teamName, listener)
     }
 }

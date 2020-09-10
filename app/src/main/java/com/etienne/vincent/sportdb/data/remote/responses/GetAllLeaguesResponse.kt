@@ -9,7 +9,7 @@ data class GetAllLeaguesResponse(
     val leagues: List<Leagueremote>
 ){
     fun toEntity(): GetAllLeagues {
-        return GetAllLeagues(status = GenericStatus.SUCCESS, leagues = leagues.map { remote ->
+        return GetAllLeagues(leagues = leagues.map { remote ->
             League(
                 id = remote.idLeague ?: -1,
                 name = remote.name ?: "",

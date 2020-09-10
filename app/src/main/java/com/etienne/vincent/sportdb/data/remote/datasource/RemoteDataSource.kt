@@ -1,12 +1,13 @@
 package com.etienne.vincent.sportdb.data.remote.datasource
 
+import com.etienne.vincent.sportdb.domain.Listener
 import com.etienne.vincent.sportdb.domain.entity.GetAllLeagues
 import com.etienne.vincent.sportdb.domain.entity.GetAllTeam
 import com.etienne.vincent.sportdb.domain.entity.GetPlayers
 
 
 interface RemoteDataSource {
-    suspend fun getAllTeam(leagueName: String) : GetAllTeam
-    suspend fun getAllLeagues() : GetAllLeagues
-    suspend fun getPlayers(teamName: String): GetPlayers
+    fun getAllTeam(leagueName: String, listener: Listener<GetAllTeam>)
+    fun getAllLeagues(listener: Listener<GetAllLeagues>)
+    fun getPlayers(teamName: String, listener: Listener<GetPlayers>)
 }

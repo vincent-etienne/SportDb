@@ -19,8 +19,6 @@ import com.etienne.vincent.sportdb.presentation.teams.TeamsPresenter
 import com.etienne.vincent.sportdb.presentation.teams.TeamsPresenterImpl
 import com.etienne.vincent.sportdb.presentation.teams.TeamsViewContract
 import com.google.gson.Gson
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import okhttp3.Cache
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -35,8 +33,8 @@ import java.util.concurrent.TimeUnit
 
 val presentationModule = module {
     //all presenters declared here
-    factory<TeamsPresenter> { (viewContract: TeamsViewContract) -> TeamsPresenterImpl(viewContract, get(), get(), get()) }
-    factory<PlayersPresenter> { (teamName: String, viewContract: PlayersViewContract) -> PlayersPresenterImpl(teamName, viewContract, get(), get()) }
+    factory<TeamsPresenter> { (viewContract: TeamsViewContract) -> TeamsPresenterImpl(viewContract, get(), get()) }
+    factory<PlayersPresenter> { (teamName: String, viewContract: PlayersViewContract) -> PlayersPresenterImpl(teamName, viewContract, get()) }
 }
 
 val domainModule = module {
@@ -54,8 +52,6 @@ val dataModule = module {
     single { createCache(androidContext()) }
 
     single { createOkHttpClient(androidContext(), get()) }
-
-    single<CoroutineDispatcher> { Dispatchers.Main }
 
     single<SportsDbApi> { createWebService(get(), "https://www.thesportsdb.com/") }
 
