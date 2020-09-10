@@ -11,6 +11,7 @@ import com.etienne.vincent.sportdb.common.MarginItemDecoration
 import com.etienne.vincent.sportdb.common.toPx
 import com.etienne.vincent.sportdb.domain.entity.Team
 import com.etienne.vincent.sportdb.presentation.BaseActivity
+import com.etienne.vincent.sportdb.presentation.players.PlayersActivity
 import kotlinx.android.synthetic.main.teams_activity.*
 import org.koin.android.ext.android.inject
 import org.koin.core.parameter.parametersOf
@@ -63,6 +64,6 @@ class TeamsActivity : BaseActivity(), TeamsViewContract {
     }
 
     override fun navigateToTeam(team: Team) {
-
+        startActivity(PlayersActivity.newIntent(this, team))
     }
 }

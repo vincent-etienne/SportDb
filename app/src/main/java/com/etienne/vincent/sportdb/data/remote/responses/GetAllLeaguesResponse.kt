@@ -11,8 +11,8 @@ data class GetAllLeaguesResponse(
     fun toEntity(): GetAllLeagues {
         return GetAllLeagues(status = GenericStatus.SUCCESS, leagues = leagues.map { remote ->
             League(
-                id = remote.idLeague,
-                name = remote.name,
+                id = remote.idLeague ?: -1,
+                name = remote.name ?: "",
                 nameAlternate = remote.nameAlternate ?: "",
                 sport = when(remote.sport){
                     "Soccer" -> Sport.SOCCER
@@ -25,11 +25,11 @@ data class GetAllLeaguesResponse(
 
 data class Leagueremote(
     @SerializedName("idLeague")
-    val idLeague: Int,
+    val idLeague: Int?,
     @SerializedName("strLeague")
-    val name: String,
+    val name: String?,
     @SerializedName("strLeagueAlternate")
     val nameAlternate: String?,
     @SerializedName("strSport")
-    val sport: String
+    val sport: String?
 )

@@ -13,8 +13,8 @@ data class GetAllTeamResponse(
     fun toEntity(): GetAllTeam {
         return GetAllTeam(status = GenericStatus.SUCCESS, teams = teams.map { remote ->
             Team(
-                name = remote.name,
-                imageUrl = remote.imageUrl
+                name = remote.name ?: "",
+                imageUrl = remote.imageUrl ?: ""
             )
         })
     }
@@ -22,9 +22,9 @@ data class GetAllTeamResponse(
 
 data class TeamRemote(
     @SerializedName("idTeam")
-    val idTeam: Int,
+    val idTeam: Int?,
     @SerializedName("strTeam")
-    val name: String,
+    val name: String?,
     @SerializedName("strTeamBadge")
-    val imageUrl: String
+    val imageUrl: String?
 )

@@ -11,6 +11,10 @@ import com.etienne.vincent.sportdb.data.remote.repository.SportDbRepositoryImpl
 import com.etienne.vincent.sportdb.domain.repository.SportDbRepository
 import com.etienne.vincent.sportdb.domain.usecase.GetAllLeaguesUseCase
 import com.etienne.vincent.sportdb.domain.usecase.GetAllTeamUseCase
+import com.etienne.vincent.sportdb.domain.usecase.GetPlayersUseCase
+import com.etienne.vincent.sportdb.presentation.players.PlayersPresenter
+import com.etienne.vincent.sportdb.presentation.players.PlayersPresenterImpl
+import com.etienne.vincent.sportdb.presentation.players.PlayersViewContract
 import com.etienne.vincent.sportdb.presentation.teams.TeamsPresenter
 import com.etienne.vincent.sportdb.presentation.teams.TeamsPresenterImpl
 import com.etienne.vincent.sportdb.presentation.teams.TeamsViewContract
@@ -32,12 +36,14 @@ import java.util.concurrent.TimeUnit
 val presentationModule = module {
     //all presenters declared here
     factory<TeamsPresenter> { (viewContract: TeamsViewContract) -> TeamsPresenterImpl(viewContract, get(), get(), get()) }
+    factory<PlayersPresenter> { (teamName: String, viewContract: PlayersViewContract) -> PlayersPresenterImpl(teamName, viewContract, get(), get()) }
 }
 
 val domainModule = module {
     //all domain use cases declared here, with factory scope
     factory { GetAllTeamUseCase(get()) }
     factory { GetAllLeaguesUseCase(get()) }
+    factory { GetPlayersUseCase(get()) }
 }
 
 val dataModule = module {
