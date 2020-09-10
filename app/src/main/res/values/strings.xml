@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">SportDb</string>
+    <string name="player_born_date">"Birth Date : %s"</string>
+    <string name="player_signing_prize">"Prize : %s"</string>
 </resources>
